@@ -2,7 +2,7 @@ import torch
 from transformers import BertTokenizer, BertForSequenceClassification, AdamW
 from torch.utils.data import DataLoader, Dataset
 import pandas as pd
-
+import os
 
 # Define the dataset class
 class TextDataset(Dataset):
@@ -23,9 +23,12 @@ class TextDataset(Dataset):
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
 
-# Load data
-train_data = pd.read_csv('C:/Users/ali12/PycharmProjects/guardtype_server/training_data_1000.csv')
-val_data = pd.read_csv('C:/Users/ali12/PycharmProjects/guardtype_server/validation_data_separate.csv')
+# Load data using environment variables for paths
+train_data_path = os.getenv('TRAIN_DATA_PATH', '/path/to/default/training_data.csv')
+val_data_path = os.getenv('VAL_DATA_PATH', '/path/to/default/validation_data.csv')
+
+train_data = pd.read_csv(train_data_path)
+val_data = pd.read_csv(val_data_path)
 
 # Prepare datasets
 train_dataset = TextDataset(train_data['text'].tolist(), train_data['label'].tolist(), tokenizer)
@@ -92,6 +95,8 @@ def train_and_evaluate(model, train_loader, val_loader, optimizer, epochs=3):
 
 # Train the model
 train_and_evaluate(model, train_loader, val_loader, optimizer)
-# Save the model and tokenizer after training
-model.save_pretrained('C:/Users/ali12/PycharmProjects/guardtype_server/saved_model')
-tokenizer.save_pretrained('C:/Users/ali12/PycharmProjects/guardtype_server/saved_model')
+
+# Save the model and tokenizer using environment variables for paths
+model_save_path = os.getenv('MODEL_SAVE_PATH', '/path/to/default/saved_model')
+model.save_pretrained(model_save_path)
+tokenizer.save_pretrained(model_save_path)
