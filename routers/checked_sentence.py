@@ -1,4 +1,5 @@
 import datetime
+import os
 from fastapi import APIRouter, Depends, status, HTTPException
 from typing import List
 import logging
@@ -17,7 +18,7 @@ from services.notification_service import notify_offensive_word
 router = APIRouter(prefix='/recognize_word', tags=['recognize_word'])
 
 #Load tokenizer and model
-model_path = 'C:/Users/ali12/PycharmProjects/guardtype_server/saved_model'
+model_path = os.getenv('MODEL_PATH', '/default/path/to/saved_model')
 tokenizer = BertTokenizer.from_pretrained(model_path)
 model = BertForSequenceClassification.from_pretrained(model_path, num_labels=2)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
