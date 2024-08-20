@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Alert Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #333;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Content Alert Notification</h1>
+        <p>Hello, {{ username }}</p>
+        <p>We have detected that your child has written content that may be considered offensive or inappropriate. Here is an example of what was written:</p>
+        <p><em style="color: #b00000;">{{ detected_content }}</em></p>
+        <p>We understand that children may not always realize the impact of their words. We recommend discussing this matter with your child to ensure they understand the importance of respectful communication.</p>
+    </div>
+</body>
+</html>
